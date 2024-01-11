@@ -18,7 +18,7 @@ const About = () => {
                     </span> pour vos images.
                 </p>
                 <p className="text-md text-gray-200 my-5 max-w-[600px]">
-                    Il utilise des technologies web modernes pour traiter vos images directement dans votre navigateur. Aucune donnée n'est envoyée à un serveur ou conservée. Tout est traité localement sur votre machine pour garantir la confidentialité de vos données.
+                    Il utilise des technologies web modernes pour traiter vos images directement dans votre navigateur. Aucune donnée n&apos;est envoyée à un serveur ou conservée. Tout est traité localement sur votre machine pour garantir la confidentialité de vos données.
                 </p>
             </div>
         </div>
