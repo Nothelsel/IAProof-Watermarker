@@ -124,7 +124,7 @@ const Watermarker = ({ base64Image, onWatermarkApplied }: { base64Image: string,
                 onWatermarkApplied(src.toString());
             });
         }
-    }, [base64Image, watermarkText]);
+    }, [base64Image, watermarkText, advancedMode, iaProof, noiseLevel, onWatermarkApplied, seed]);
 
     const clearWatermark = () => {
         setWatermarkText('');
@@ -175,7 +175,7 @@ const Watermarker = ({ base64Image, onWatermarkApplied }: { base64Image: string,
                     <span className="relative flex justify-center items-center">
                         <NextImage src="/info-icon.svg" width={16} height={16} alt="Info" />
                         <span className="absolute w-64 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-4 py-2">
-                            IAProof est une option qui rend le filigrane résistant à l'IA.
+                            IAProof est une option qui rend le filigrane résistant à l&apos;IA.
                         </span>
                     </span>
                 </div>
