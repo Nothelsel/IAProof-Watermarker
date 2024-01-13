@@ -6,7 +6,6 @@ export default function Home() {
     <main className="h-full w-full bg-no-repeat">
       <div className="flex flex-col">
         <Banner />
-        <Footer />
       </div>
     </main>
   );
