@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 
 
 type ImageUploadProps = {
@@ -11,6 +12,10 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
+            if (!file.type.startsWith('image/')) {
+                toast.error('Seuls les fichiers image sont acceptés');
+                return;
+            }
             const reader = new FileReader();
             reader.onload = (e) => {
                 setImage(e.target?.result as string);
@@ -23,11 +28,15 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
     const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
         e.preventDefault();
     };
-    
+
     const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         if (file) {
+            if (!file.type.startsWith('image/')) {
+                toast.error('Seuls les fichiers image sont acceptés');
+                return;
+            }
             const reader = new FileReader();
             reader.onload = (e) => {
                 setImage(e.target?.result as string);
@@ -40,8 +49,8 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
     return (
         <div className="max-w-xl bg-gray-800 p-4 rounded-lg">
             <label className="flex justify-center w-full h-32 px-4 transition bg-gray-700 border-2 border-gray-500 border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none"
-            onDragOver={handleDragOver}
-            onDrop={handleDrop}
+                onDragOver={handleDragOver}
+                onDrop={handleDrop}
             >
                 <span className="flex items-center space-x-2">
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
@@ -55,6 +64,18 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
                 </span>
                 <input type="file" name="file_upload" className="hidden" onChange={handleImageChange} />
             </label>
+            <ToastContainer
+                position="bottom-left"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="dark"
+            />
         </div>
     );
 
