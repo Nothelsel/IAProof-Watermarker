@@ -18,6 +18,10 @@ const Navbar = () => {
               Home
             </div>
           </Link>
+          <div onClick={() => window.open("https://github.com/Nothelsel/IAProof-Watermarker")}
+               className="z-[1] bg-transparent padding-10 cursor-pointer bg-black hover:bg-[#2E2E2E] rounded-xl text-white py-2 px-5">
+            Github
+          </div>
           <Link href="/about">
             <div className="bg-transparent padding-10 cursor-pointer bg-black hover:bg-[#2E2E2E] rounded-xl text-white py-2 px-5 whitespace-nowrap">
               About

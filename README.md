@@ -32,3 +32,20 @@ Clonez le dépôt :
 ```bash
 git clone https://github.com/votre-username/ia-proof-watermarker.git
 cd ia-proof-watermarker
+npm install
+```
+
+### Utilisation
+
+```bash
+npm run dev
+```
+
+## Utilisation en ligne 
+
+Vous pouvez utiliser IAProof-Watermarker en ligne à l'adresse suivante : [https://filigran.seb2dev.com](https://filigran.seb2dev.com)
+
+
+## Licence
+
+Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
