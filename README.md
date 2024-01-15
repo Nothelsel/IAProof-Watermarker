@@ -48,4 +48,4 @@ Vous pouvez utiliser IAProof-Watermarker en ligne à l'adresse suivante : [https
 
 ## Licence
 
-Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE) pour plus de détails.
+Ce projet est sous licence MIT - voir le fichier `LICENSE` pour plus de détails.
