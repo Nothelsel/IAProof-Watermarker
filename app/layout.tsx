@@ -8,18 +8,32 @@ import Footer from "@/components/Footer";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    "https://seb2dev.com"
-  ),
-  title: "Filigran Seb2Dev",
-  description: "Initialement developpé par Ibrahim Memon, modifié par Sébastien Drouot",
-  keywords: ["Developer", "Portfolio", "Developer Portflio", "Sébastien Drouot", "Fullstack", "Backend", "Frontend", "Angular", "Freelance", "seb2dev.com", "seb2dev.fr", "seb2dev"],
+  metadataBase: new URL("https://filigran.seb2dev.com"),
+  title: "Filigran - Sécurisez vos images avec un filigrane personnalisé",
+  description: "Protégez vos images contre l'utilisation non autorisée avec Filigran, l'outil de filigranage intuitif et robuste créé par Sébastien Drouot, alias Seb2Dev. Utilisez des filigranes personnalisés pour ajouter une couche de sécurité et maintenir la confidentialité de vos créations visuelles.",
+  keywords: [
+    "Filigrane", "Générateur de filigrane", "Sécurité d'image", "Confidentialité", 
+    "Développeur Fullstack", "Développement Backend", "Développement Frontend", 
+    "Angular", "Freelance", "Seb2Dev"
+  ],
   openGraph: {
-    title: "Sébastien Drouot",
-    description: "Software Engineer / Fullstack Developer",
-    images: "/OpenGraph.png",
+    title: "Filigran - Générateur de filigrane avancé par Seb2Dev",
+    description: "Filigran aide les créateurs à protéger leurs images avec des filigranes personnalisés et résistants à l'IA, conçus pour les professionnels et les passionnés.",
+    images: [
+      {
+        url: "https://filigran.seb2dev.com/OpenGraph.png",
+        width: 1200,
+        height: 630,
+        alt: "Aperçu de Filigran - Générateur de filigrane",
+      },
+    ],
+    siteName: "Filigran",
+  },
+  twitter: {
+    site: "@seb2dev_",
   },
 };
+
 
 export default function RootLayout({
   children,
@@ -28,7 +42,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="fr">
-      <body className={`${inter.className} bg-[#111] overflow-y-scroll overflow-x-hidden`}>
+      <body className={`${inter.className} bg-black overflow-y-scroll overflow-x-hidden`}>
         <StarsCanvas />
         <Navbar />
         {children}

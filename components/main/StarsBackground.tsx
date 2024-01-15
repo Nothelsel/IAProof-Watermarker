@@ -10,8 +10,8 @@ const StarBackground = (props: any) => {
   const ref = useRef() as any
   const [sphere] = useState(() => random.inSphere(new Float32Array(5000), { radius: 1.5 }))
   useFrame((state, delta) => {
-    ref.current.rotation.x -= delta / 10
-    ref.current.rotation.y -= delta / 15
+    ref.current.rotation.x -= delta / 20
+    ref.current.rotation.y -= delta / 30
   })
   return (
     <group rotation={[0, 0, Math.PI / 4]}>
