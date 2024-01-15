@@ -47,8 +47,8 @@ export default function RootLayout({
         <StarsCanvas />
         <Navbar />
         {children}
-        
         <Footer />
+        <script defer src="https://a.guillaume.engineer/script.js" data-website-id="74b92240-bea4-4769-bf4e-e8ef1a8d302e" data-cache="true" data-domains="filigran.seb2dev.com"></script>
       </body>
     </html>
   );
