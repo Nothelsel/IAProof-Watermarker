@@ -16,6 +16,7 @@ IAProof-Watermarker est un outil avancé de filigranage d'images conçu pour off
 
 <p align="left">
   <img src="https://seb2dev.com/filgran.gif" alt="IAProof-Watermarker Demo" />
+  <p align="center">Cette image est une démonstration avec une fausse carte nationale d'identité.</p>
 </p>
 
 ## Comment Commencer
