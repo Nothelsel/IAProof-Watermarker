@@ -80,10 +80,10 @@ const Banner = () => {
       {!uploadedImage && (
         <div className="bg-gray-800 px-6 py-5 rounded-lg shadow-lg max-w-lg text-center mt-4">
           <h2 className="text-md text-white font-semibold mb-2">
-            Protégez vos images contre l'utilisation non autorisée
+            Protégez vos images contre l&apos;utilisation non autorisée
           </h2>
           <p className="text-gray-300 mb-2">
-            Filigran offre un moyen rapide et efficace d'ajouter un filigrane à vos images sans compromettre la confidentialité. Ce service fonctionne entièrement dans votre navigateur, assurant que vos images restent uniquement entre vos mains.
+            Filigran offre un moyen rapide et efficace d&apos;ajouter un filigrane à vos images sans compromettre la confidentialité. Ce service fonctionne entièrement dans votre navigateur, assurant que vos images restent uniquement entre vos mains.
           </p>
         </div>
       )}

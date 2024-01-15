@@ -15,7 +15,6 @@ const Watermarker = ({ base64Image, onWatermarkApplied }: { base64Image: string,
 
     
     useEffect(() => {
-
         if (base64Image && watermarkText) {
             const params = { image: base64Image, noiseLevel, seed, iaProof, advancedMode, watermarkText };
             setLastParams(params);
@@ -24,7 +23,7 @@ const Watermarker = ({ base64Image, onWatermarkApplied }: { base64Image: string,
                 onWatermarkApplied(src.toString());
             });
         }
-    }, [base64Image, watermarkText]);
+    }, [base64Image, watermarkText, noiseLevel, seed, iaProof, advancedMode]);
 
     const clearWatermark = () => {
         setWatermarkText('');
@@ -43,7 +42,7 @@ const Watermarker = ({ base64Image, onWatermarkApplied }: { base64Image: string,
 
     useEffect(() => {
         regenerate();
-    }, [noiseLevel, seed, iaProof, advancedMode]);
+    }, [noiseLevel, seed, iaProof, advancedMode, lastParams]);
 
 
     const handleRandomizeSeed = () => {
@@ -60,7 +59,12 @@ const Watermarker = ({ base64Image, onWatermarkApplied }: { base64Image: string,
                     type="text"
                     placeholder="Entrez votre filigrane (ex: confidentiel)"
                     value={watermarkText}
-                    onChange={(e) => setWatermarkText(e.target.value)}
+                    onChange={(e) => {
+                        setWatermarkText(e.target.value);
+                        if (e.target.value.length === 0) {
+                            clearWatermark();
+                        }
+                    }}
                     className="mb-4 mr-2 p-2 w-full min-w-[8rem] rounded border border-gray-300 bg-gray-800 text-white placeholder-gray-400"
                 />
                 <button
@@ -88,7 +92,7 @@ const Watermarker = ({ base64Image, onWatermarkApplied }: { base64Image: string,
                     <span className="relative flex justify-center items-center">
                         <NextImage src="/info-icon.svg" width={24} height={24} alt="Info" className="hover:opacity-75" />
                         <span className="absolute w-64 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-4 py-2">
-                            IAProof est une option qui rend le filigrane résistant à l'IA.
+                            IAProof est une option qui rend le filigrane résistant à l&apos;IA.
                         </span>
                     </span>
                 </div>
