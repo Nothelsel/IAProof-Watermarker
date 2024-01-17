@@ -170,11 +170,11 @@ const Watermarker = ({ base64Image, onWatermarkApplied }: { base64Image: string,
                                 onChange={(e) => setRemoveMetadata(e.target.checked)}
                                 className="w-6 h-6 text-blue-500 rounded"
                             />
-                            <span>Supprimer les métadonnées de l'image</span>
+                            <span>Supprimer les métadonnées de l&apos;image</span>
                             <span className="relative flex justify-center items-center">
                                 <NextImage src="/info-icon.svg" width={24} height={24} alt="Info" className="hover:opacity-75" />
                                 <span className="absolute w-64 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-4 py-2">
-                                    Supprimer les métadonnées de l&apos;image permet d'augmenter la confidentialité de l&apos;image.
+                                    Supprimer les métadonnées de l&apos;image permet d&apos;augmenter la confidentialité de l&apos;image.
                                 </span>
                             </span>
                         </div>
