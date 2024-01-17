@@ -14,6 +14,7 @@
     "@types/seedrandom": "^3.0.8",
     "colorthief": "^2.4.0",
     "next": "14.0.4",
+    "piexifjs": "^1.0.6",
     "react": "^18",
     "react-dom": "^18",
     "react-toastify": "^10.0.1",
