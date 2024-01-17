@@ -8,7 +8,8 @@
     "dev": "next dev -p 3501",
     "build": "next build",
     "start": "PORT=3001 next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "build-and-restart": "next build && pm2 restart IAProof-Watermarker"
   },
   "dependencies": {
     "@types/seedrandom": "^3.0.8",
