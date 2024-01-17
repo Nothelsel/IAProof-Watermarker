@@ -1,5 +1,7 @@
 import ColorThief from 'colorthief';
 import seedrandom from 'seedrandom';
+import { toast } from 'react-toastify';
+import * as Piexif from "piexifjs";
 
 const resizeImage = (image: string, maxWidth: number, maxHeight: number) => {
     return new Promise<string>((resolve, reject) => {
@@ -32,7 +34,63 @@ const resizeImage = (image: string, maxWidth: number, maxHeight: number) => {
     });
 };
 
-export const applyRandomWatermark = async (image: string, noiseLevel: number, seed: string, iaProof: boolean, advancedMode:boolean, watermarkText:string) => {
+export const downloadImage = async (watermarkedImage: string, removeMetadata: boolean) => {
+    let image = watermarkedImage;
+    if (removeMetadata) {
+        image = await deleteMetadata(watermarkedImage);
+    }
+    const link = document.createElement("a");
+    link.href = image;
+    link.setAttribute("download", "watermarked-image.png");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+const deleteMetadata = async (image: string): Promise<string> => {
+    if (isJpg(image)) {
+        return await deleteExifData(image);
+    } else if (isPng(image)) {
+        return deletePngChunks(image);
+    } else {
+        toast.error('Le format de l\'image n\'est pas supporté, seuls les images JPG sont supportées pour le moment.');
+        return image;
+    }
+};
+
+const deleteExifData = async (image: string): Promise<string> => {
+    try {
+        const exifObj = { "0th": {}, "Exif": {}, "GPS": {}, "thumbnail": null };
+        const exifbytes = Piexif.dump(exifObj);
+        return Piexif.insert(exifbytes, image);
+    } catch (error) {
+        toast.error('Une erreur est survenue lors de la suppression des métadonnées de l\'image');
+        return image;
+    }
+  
+};
+
+const deletePngChunks = async (image: string) => {
+    try {
+        toast.info('Seul les métadonnées EXIF sont supprimées pour le moment.');
+        return image
+    } catch (error) {
+        toast.error('Une erreur est survenue lors de la suppression des métadonnées de l\'image');
+        return image;
+    }
+};
+
+const isJpg = (image: string) => {
+    const extension = image.split('.').pop();
+    return extension === 'jpg' || extension === 'jpeg';
+}
+
+const isPng = (image: string) => {
+    const extension = image.split('.').pop();
+    return extension === 'png';
+}
+
+export const applyRandomWatermark = async (image: string, noiseLevel: number, seed: string, iaProof: boolean, advancedMode: boolean, watermarkText: string, bySeb2dev: boolean) => {
     if (advancedMode) seedrandom(seed, { global: true });
 
     const resizedImage = await resizeImage(image, 800, 800);
@@ -98,6 +156,16 @@ export const applyRandomWatermark = async (image: string, noiseLevel: number, se
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
             }
 
+            if (bySeb2dev) {
+                const fontSize = 20;
+                const font = 'sans-serif';
+                const padding = 10;
+                ctx.font = `${fontSize}px ${font}`;
+                ctx.textAlign = 'right';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                ctx.fillText('Filgrane by Seb2dev', canvas.width - padding, canvas.height - padding);
+            }
+
             resolve(canvas.toDataURL());
         };
         img.onerror = reject;
@@ -113,3 +181,5 @@ export const randomizeSeed = () => {
     }
     return result;
 };
+
+
