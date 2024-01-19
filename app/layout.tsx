@@ -31,7 +31,12 @@ export const metadata: Metadata = {
     siteName: "Filigran",
   },
   twitter: {
+    card: "summary_large_image",
     site: "@seb2dev_",
+    creator: "@seb2dev_",
+    title: "Filigran - Générateur de filigrane avancé par Seb2Dev",
+    description: "Filigran aide les créateurs à protéger leurs images avec des filigranes personnalisés et résistants à l'IA, conçus pour les professionnels et les passionnés.",
+    images: "https://filigran.seb2dev.com/OpenGraph.png",
   },
 };
 
