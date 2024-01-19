@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3501",
-    "build": "next build",
+    "build": "rm -rf .next && next build",
     "start": "PORT=3001 next start",
     "lint": "next lint",
     "build-and-restart": "next build && pm2 restart IAProof-Watermarker"
