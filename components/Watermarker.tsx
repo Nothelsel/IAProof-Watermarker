@@ -57,7 +57,8 @@ const Watermarker = ({ base64Image, onWatermarkApplied }: { base64Image: string,
     }
 
     const handleDownloadImage = () => {
-        downloadImage(watermarkedImage, removeMetadata);
+        const imageToDownload = watermarkedImage !== "" ? watermarkedImage : unmodifiedImage;
+        downloadImage(imageToDownload, removeMetadata);
     }
 
 
