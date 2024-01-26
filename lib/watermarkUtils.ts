@@ -34,17 +34,26 @@ const resizeImage = (image: string, maxWidth: number, maxHeight: number) => {
     });
 };
 
-export const downloadImage = async (watermarkedImage: string, removeMetadata: boolean) => {
-    let image = watermarkedImage;
+export const downloadImage = async (image: string, removeMetadata: boolean) => {
     if (removeMetadata) {
-        image = await deleteMetadata(watermarkedImage);
+        image = await deleteMetadata(image);
     }
-    const link = document.createElement("a");
-    link.href = image;
-    link.setAttribute("download", "watermarked-image.png");
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+
+    // Vérifier si nous sommes dans un navigateur intégré
+    const isStandalone = (window.navigator as any).standalone || window.matchMedia('(display-mode: standalone)').matches;
+
+    if (isStandalone) {
+        // Si nous sommes dans un navigateur intégré, ouvrir l'image dans un nouvel onglet
+        window.open(image, '_blank');
+    } else {
+        // Sinon, télécharger l'image normalement
+        const link = document.createElement("a");
+        link.href = image;
+        link.setAttribute("download", "watermarked-image.png");
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
 }
 
 const deleteMetadata = async (image: string): Promise<string> => {
@@ -90,6 +99,61 @@ const isPng = (image: string) => {
     return extension === 'png';
 }
 
+const drawWatermarks = (ctx: CanvasRenderingContext2D, watermarkCount: number, dominantColors: number[][], watermarkText: string) => {
+    for (let i = 0; i < watermarkCount; i++) {
+        const x = Math.random() * ctx.canvas.width;
+        const y = Math.random() * ctx.canvas.height;
+        const angle = Math.random() * Math.PI * 2;
+        const fontSize = Math.random() * 30 + 20;
+        const font = 'sans-serif';
+        const colorIndex = Math.floor(Math.random() * dominantColors.length);
+        const [r, g, b] = dominantColors[colorIndex];
+        const opacity = Math.random();
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b},  ${opacity})`;
+        ctx.font = `${fontSize}px ${font}`;
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+        ctx.fillText(watermarkText, 0, 0);
+        ctx.restore();
+    }
+};
+
+const applyNoise = (ctx: CanvasRenderingContext2D, noiseLevel: number, advancedMode: boolean) => {
+    const imageData = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
+    for (let i = 0; i < imageData.data.length; i += 4) {
+        const noise = advancedMode ? Math.random() * noiseLevel - noiseLevel / 2 : Math.random() * 50 - 25;
+        imageData.data[i] += noise;
+        imageData.data[i + 1] += noise;
+        imageData.data[i + 2] += noise;
+    }
+    ctx.putImageData(imageData, 0, 0);
+};
+
+const applyIaProof = (ctx: CanvasRenderingContext2D) => {
+    const patternCanvas = document.createElement('canvas');
+    const patternCtx = patternCanvas.getContext('2d');
+    patternCanvas.width = 50;
+    patternCanvas.height = 50;
+    if (patternCtx === null) throw new Error('Context is null');
+    patternCtx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+    patternCtx.beginPath();
+    patternCtx.arc(25, 25, 20, 0, 2 * Math.PI);
+    patternCtx.fill();
+    ctx.fillStyle = ctx.createPattern(patternCanvas, 'repeat') as CanvasPattern;
+    ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+};
+
+const applyBySeb2dev = (ctx: CanvasRenderingContext2D) => {
+    const fontSize = 20;
+    const font = 'sans-serif';
+    const padding = 10;
+    ctx.font = `${fontSize}px ${font}`;
+    ctx.textAlign = 'right';
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+    ctx.fillText('Filgrane by Seb2dev', ctx.canvas.width - padding, ctx.canvas.height - padding);
+};
+
 export const applyRandomWatermark = async (image: string, noiseLevel: number, seed: string, iaProof: boolean, advancedMode: boolean, watermarkText: string, bySeb2dev: boolean) => {
     if (advancedMode) seedrandom(seed, { global: true });
 
@@ -112,58 +176,15 @@ export const applyRandomWatermark = async (image: string, noiseLevel: number, se
 
             const watermarkCount = Math.floor(Math.random() * 5) + 5;
 
-            for (let i = 0; i < watermarkCount; i++) {
-                const x_1 = Math.random() * canvas.width;
-                const y = Math.random() * canvas.height;
-                const angle = Math.random() * Math.PI * 2; // Angle aléatoire
-                const fontSize = Math.random() * 30 + 20;
-                const font = 'sans-serif'; // Police
-                const colorIndex = Math.floor(Math.random() * dominantColors.length);
-                const [r, g, b] = dominantColors[colorIndex];
-                const opacity = Math.random(); // Opacité aléatoire
-                ctx.fillStyle = `rgba(${r}, ${g}, ${b},  ${opacity})`; // Couleur aléatoire
-                ctx.font = `${fontSize}px ${font}`;
-                ctx.save();
-                ctx.translate(x_1, y);
-                ctx.rotate(angle);
-                ctx.fillText(watermarkText, 0, 0);
-                ctx.restore();
-            }
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            for (let i_1 = 0; i_1 < imageData.data.length; i_1 += 4) {
-                const noise = advancedMode ? Math.random() * noiseLevel - noiseLevel / 2 : Math.random() * 50 - 25;
-                imageData.data[i_1] += noise; // Rouge
-                imageData.data[i_1 + 1] += noise; // Vert
-                imageData.data[i_1 + 2] += noise; // Bleu
-            }
-            ctx.putImageData(imageData, 0, 0);
+            drawWatermarks(ctx, watermarkCount, dominantColors, watermarkText);
+            applyNoise(ctx, noiseLevel, advancedMode);
 
             if (iaProof) {
-                const patternCanvas = document.createElement('canvas');
-                const patternCtx = patternCanvas.getContext('2d');
-                patternCanvas.width = 50;
-                patternCanvas.height = 50;
-                if (patternCtx === null) return reject('Context is null');
-                // Dessinez un motif de perturbation
-                patternCtx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-                patternCtx.beginPath();
-                patternCtx.arc(25, 25, 20, 0, 2 * Math.PI);
-                patternCtx.fill();
-
-
-                // Répétez le motif sur l'image principale
-                ctx.fillStyle = ctx.createPattern(patternCanvas, 'repeat') as CanvasPattern;
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                applyIaProof(ctx);
             }
 
             if (bySeb2dev) {
-                const fontSize = 20;
-                const font = 'sans-serif';
-                const padding = 10;
-                ctx.font = `${fontSize}px ${font}`;
-                ctx.textAlign = 'right';
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
-                ctx.fillText('Filgrane by Seb2dev', canvas.width - padding, canvas.height - padding);
+                applyBySeb2dev(ctx);
             }
 
             resolve(canvas.toDataURL());
