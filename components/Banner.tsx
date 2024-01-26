@@ -10,11 +10,11 @@ const Banner = () => {
 
   const handleImageUpload = (image: string) => {
     setUploadedImage(image);
-    setWatermarkedImage(null); 
+    setWatermarkedImage(null);
   };
 
   const handleWatermarkApplied = (image: string) => {
-    setWatermarkedImage(image); 
+    setWatermarkedImage(image);
   };
 
   const handleRemoveImage = () => {
@@ -24,7 +24,7 @@ const Banner = () => {
 
 
   return (
-    <div className={`flex flex-col items-center justify-center min-h-screen ${!uploadedImage ? 'space-y-24' : ''}`}>
+    <div className={`flex flex-col items-center justify-center min-h-screen ${!uploadedImage ? 'md:space-y-24 space-y-10' : ''}`}>
       {!uploadedImage && (
         <div className="text-center mb-4">
           <h1 className="text-4xl font-bold text-white">
@@ -64,7 +64,7 @@ const Banner = () => {
       </div>
       {uploadedImage && (<Watermarker base64Image={uploadedImage} onWatermarkApplied={handleWatermarkApplied} />)}
       {!uploadedImage && (
-        <div className="bg-gray-800 px-6 py-5 rounded-lg shadow-lg max-w-lg text-center">
+        <div className="bg-gray-800 px-6 py-5 rounded-lg shadow-lg md:max-w-lg max-w-[22rem] mx-auto text-center">
           <h2 className="text-md text-white font-semibold mb-2">
             Protégez vos images contre l&apos;utilisation non autorisée
           </h2>
