@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { applyRandomWatermark, randomizeSeed, downloadImage } from '@/lib/watermarkUtils';
 import NextImage from 'next/image';
 
-const Watermarker = ({ base64Image, onWatermarkApplied }: { base64Image: string, onWatermarkApplied: (image: string) => void }) => {
+const Watermarker = ({ base64Image, imageName, onWatermarkApplied }: { base64Image: string, imageName: string|null, onWatermarkApplied: (image: string) => void }) => {
     const [lastParams, setLastParams] = useState<{ image: string, noiseLevel: number, seed: string, iaProof: boolean, advancedMode: boolean, watermarkText: string } | null>(null);
     const [watermarkText, setWatermarkText] = useState('');
     const [watermarkedImage, setWatermarkedImage] = useState('');
@@ -58,7 +58,7 @@ const Watermarker = ({ base64Image, onWatermarkApplied }: { base64Image: string,
 
     const handleDownloadImage = () => {
         const imageToDownload = watermarkedImage !== "" ? watermarkedImage : unmodifiedImage;
-        downloadImage(imageToDownload, removeMetadata);
+        downloadImage(imageToDownload, removeMetadata, imageName);
     }
 
 

@@ -7,10 +7,12 @@ import Image from "next/image";
 const Banner = () => {
   const [uploadedImage, setUploadedImage] = useState(null as string | null);
   const [watermarkedImage, setWatermarkedImage] = useState(null as string | null);
+  const [imageName, setImageName] = useState(null as string | null);
 
-  const handleImageUpload = (image: string) => {
+  const handleImageUpload = (image: string, name:string) => {
     setUploadedImage(image);
     setWatermarkedImage(null);
+    setImageName(name);
   };
 
   const handleWatermarkApplied = (image: string) => {
@@ -62,7 +64,7 @@ const Banner = () => {
           )}
         </div>
       </div>
-      {uploadedImage && (<Watermarker base64Image={uploadedImage} onWatermarkApplied={handleWatermarkApplied} />)}
+      {uploadedImage && (<Watermarker base64Image={uploadedImage}  imageName={imageName} onWatermarkApplied={handleWatermarkApplied} />)}
       {!uploadedImage && (
         <div className="bg-gray-800 px-6 py-5 rounded-lg shadow-lg md:max-w-lg max-w-[22rem] mx-auto text-center">
           <h2 className="text-md text-white font-semibold mb-2">

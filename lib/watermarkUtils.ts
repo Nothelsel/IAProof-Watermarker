@@ -34,7 +34,7 @@ const resizeImage = (image: string, maxWidth: number, maxHeight: number) => {
     });
 };
 
-export const downloadImage = async (image: string, removeMetadata: boolean) => {
+export const downloadImage = async (image: string, removeMetadata: boolean, imageName:string|null) => {
     if (removeMetadata) {
         image = await deleteMetadata(image);
     }
@@ -49,7 +49,7 @@ export const downloadImage = async (image: string, removeMetadata: boolean) => {
         // Sinon, télécharger l'image normalement
         const link = document.createElement("a");
         link.href = image;
-        link.setAttribute("download", "watermarked-image.png");
+        link.setAttribute("download", imageName ? `${imageName}-watermarked.png` : "watermarked-image.png");
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

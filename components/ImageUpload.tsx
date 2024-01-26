@@ -3,25 +3,31 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 type ImageUploadProps = {
-    onImageUpload: (image: string) => void;
+    onImageUpload: (image: string, name: string) => void;
 };
 
 const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
     const [image, setImage] = useState(null as string | null);
 
+
+    const readFile = (file: File) => {
+        if (!file.type.startsWith('image/')) {
+            toast.error('Seuls les fichiers image sont acceptés');
+            return;
+        }
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            setImage(e.target?.result as string);
+            const fileNameWithoutExtension = file.name.split('.').slice(0, -1).join('.');
+            onImageUpload(e.target?.result as string, fileNameWithoutExtension);
+        };
+        reader.readAsDataURL(file);
+    };
+
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-            if (!file.type.startsWith('image/')) {
-                toast.error('Seuls les fichiers image sont acceptés');
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setImage(e.target?.result as string);
-                onImageUpload(e.target?.result as string);
-            };
-            reader.readAsDataURL(file);
+            readFile(file);
         }
     };
 
@@ -33,16 +39,7 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ onImageUpload }) => {
         e.preventDefault();
         const file = e.dataTransfer.files[0];
         if (file) {
-            if (!file.type.startsWith('image/')) {
-                toast.error('Seuls les fichiers image sont acceptés');
-                return;
-            }
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                setImage(e.target?.result as string);
-                onImageUpload(e.target?.result as string);
-            };
-            reader.readAsDataURL(file);
+            readFile(file);
         }
     };
 
