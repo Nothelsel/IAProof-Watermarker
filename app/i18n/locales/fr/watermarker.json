@@ -1,0 +1,14 @@
+{
+    "inputPlaceholder": "Entrez votre filigrane (ex: confidentiel)",
+    "iaProofInfo":"IAProof est une option qui rend le filigrane résistant à l'IA.",
+    "imageResize":"Redimensionnement Image",
+    "imageResizeInfo":"Redimensionner l'image permet de optimiser le temps de traitement. Si vous souhaitez conserver la qualité originale de l'image, désactivez cette option.",
+    "advancedMode":"Mode avancé",
+    "advancedModeInfo":"Le mode avancé vous permet de contrôler plus de paramètres pour le filigrane.",
+    "noiseLevel":"Niveau de bruit :",
+    "removeMetadata":"Supprimer les métadonnées de l'image",
+    "removeMetadataInfo":" Supprimer les métadonnées de l'image permet d'augmenter la confidentialité de l'image.",
+    "bySeb2dev":"Watermark By Seb2Dev",
+    "bySeb2devInfo":"Ajoute un watermark By Seb2Dev en bas à droite de l'image.",
+    "seed":"Seed :"
+}

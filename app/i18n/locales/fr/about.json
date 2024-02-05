@@ -1,0 +1,7 @@
+{
+    "title": "À propos de Filigrane Generator",
+    "p1": "Filigrane Generator est un outil qui vous permet de",
+    "span": "générer des filigranes personnalisés",
+    "p2": "pour vos images.",
+    "p3":" Il utilise des technologies web modernes pour traiter vos images directement dans votre navigateur. Aucune donnée n'est envoyée à un serveur ou conservée. Tout est traité localement sur votre machine pour garantir la confidentialité de vos données."
+}

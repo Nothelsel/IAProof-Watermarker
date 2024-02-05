@@ -1,9 +1,9 @@
-'use client';
 import React, { useState, useEffect } from 'react';
 import { applyRandomWatermark, randomizeSeed, downloadImage } from '@/lib/watermarkUtils';
 import NextImage from 'next/image';
+import { useTranslation } from "../app/i18n/client";
 
-const Watermarker = ({ base64Image, imageName, onWatermarkApplied }: { base64Image: string, imageName: string|null, onWatermarkApplied: (image: string) => void }) => {
+const Watermarker = ({ base64Image, imageName, onWatermarkApplied, params: { lng }  }: { base64Image: string, imageName: string|null, onWatermarkApplied: (image: string) => void,  params: { lng: string }  }) => {
     const [lastParams, setLastParams] = useState<{ image: string, noiseLevel: number, seed: string, iaProof: boolean, advancedMode: boolean, watermarkText: string } | null>(null);
     const [watermarkText, setWatermarkText] = useState('');
     const [watermarkedImage, setWatermarkedImage] = useState('');
@@ -15,6 +15,7 @@ const Watermarker = ({ base64Image, imageName, onWatermarkApplied }: { base64Ima
     const [bySeb2dev, setBySeb2dev] = useState(true);
     const [imageResize, setImageResize] = useState(true);
     const unmodifiedImage = base64Image;
+    const { t } = useTranslation(lng, 'watermarker')
 
 
     useEffect(() => {
@@ -73,7 +74,7 @@ const Watermarker = ({ base64Image, imageName, onWatermarkApplied }: { base64Ima
                 <div className="flex items-center w-full">
                     <input
                         type="text"
-                        placeholder="Entrez votre filigrane (ex: confidentiel)"
+                        placeholder={t('inputPlaceholder')}
                         value={watermarkText}
                         onChange={(e) => {
                             setWatermarkText(e.target.value);
@@ -108,7 +109,7 @@ const Watermarker = ({ base64Image, imageName, onWatermarkApplied }: { base64Ima
                         <span className="relative flex justify-center items-center">
                             <NextImage src="/info-icon.svg" width={24} height={24} alt="Info" className="hover:opacity-75" />
                             <span className="absolute w-64 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-4 py-2">
-                                IAProof est une option qui rend le filigrane résistant à l&apos;IA.
+                                {t('iaProofInfo')}
                             </span>
                         </span>
                     </div>
@@ -119,27 +120,26 @@ const Watermarker = ({ base64Image, imageName, onWatermarkApplied }: { base64Ima
                             onChange={(e) => setImageResize(e.target.checked)}
                             className="w-6 h-6 text-blue-500 rounded"
                         />
-                        <span>Redimensionnement Image</span>
+                        <span>{t('imageResize')}</span>
                         <span className="relative flex justify-center items-center">
                             <NextImage src="/info-icon.svg" width={24} height={24} alt="Info" className="hover:opacity-75" />
                             <span className="absolute w-64 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-4 py-2">
-                                Redimensionner l&apos;image permet de optimiser le temps de traitement.
-                                Si vous souhaitez conserver la qualité originale de l&apos;image, désactivez cette option.
+                                {t('imageResizeInfo')}
                             </span>
                         </span>
                     </div>
-                    <div className="flex items-center space-x-2 relative group w-1/2">
+                    <div className="flex items-center space-x-2 relative group w-2/3">
                         <input
                             type="checkbox"
                             checked={advancedMode}
                             onChange={(e) => setAdvancedMode(e.target.checked)}
                             className="w-6 h-6 text-blue-500 rounded"
                         />
-                        <span>Mode avancé</span>
+                        <span>{t('advancedMode')}</span>
                         <span className="relative flex justify-center items-center">
                             <NextImage src="/info-icon.svg" width={24} height={24} alt="Info" className="hover:opacity-75" />
                             <span className="absolute w-64 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-4 py-2">
-                                Le mode avancé vous permet de contrôler plus de paramètres pour le filigrane.
+                                {t('advancedModeInfo')}
                             </span>
                         </span>
                     </div>
@@ -150,7 +150,7 @@ const Watermarker = ({ base64Image, imageName, onWatermarkApplied }: { base64Ima
                 <div className="bg-gray-800 bg-opacity-75 rounded-lg shadow-lg px-4 py-3 mt-4 w-1/4 min-w-96">
                     <div className="space-y-4 mt-2">
                         <div className="flex items-center space-x-2">
-                            <span className="flex-none">Niveau de bruit :</span>
+                            <span className="flex-none">{t('noiseLevel')}</span>
                             <div className="flex flex-row flex-grow items-center">
                                 <input
                                     type="range"
@@ -171,11 +171,11 @@ const Watermarker = ({ base64Image, imageName, onWatermarkApplied }: { base64Ima
                                 onChange={(e) => setRemoveMetadata(e.target.checked)}
                                 className="w-6 h-6 text-blue-500 rounded"
                             />
-                            <span>Supprimer les métadonnées de l&apos;image</span>
+                            <span>{t('removeMetadata')}</span>
                             <span className="relative flex justify-center items-center">
                                 <NextImage src="/info-icon.svg" width={24} height={24} alt="Info" className="hover:opacity-75" />
                                 <span className="absolute w-64 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-4 py-2">
-                                    Supprimer les métadonnées de l&apos;image permet d&apos;augmenter la confidentialité de l&apos;image.
+                                    {t('removeMetadataInfo')}
                                 </span>
                             </span>
                         </div>
@@ -186,16 +186,16 @@ const Watermarker = ({ base64Image, imageName, onWatermarkApplied }: { base64Ima
                                 onChange={(e) => setBySeb2dev(e.target.checked)}
                                 className="w-6 h-6 text-blue-500 rounded"
                             />
-                            <span>Watermark By Seb2Dev</span>
+                            <span>{t('bySeb2dev')}</span>
                             <span className="relative flex justify-center items-center">
                                 <NextImage src="/info-icon.svg" width={24} height={24} alt="Info" className="hover:opacity-75" />
                                 <span className="absolute w-64 bottom-full mb-2 hidden group-hover:block bg-black text-white text-xs rounded px-4 py-2">
-                                    Ajoute un watermark By Seb2Dev en bas à droite de l&apos;image.
+                                    {t('bySeb2devInfo')}
                                 </span>
                             </span>
                         </div>
                         <div className="flex items-center space-x-2">
-                            <span className="flex-none">Seed :</span>
+                            <span className="flex-none">{t('seed')}</span>
                             <input
                                 className='flex-grow p-1 rounded border border-gray-300 bg-gray-800 text-white placeholder-gray-400'
                                 type="text"

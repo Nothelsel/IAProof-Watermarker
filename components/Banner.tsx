@@ -3,13 +3,15 @@ import React, { useState } from "react";
 import ImageUpload from "./ImageUpload";
 import Watermarker from "./Watermarker";
 import Image from "next/image";
+import { useTranslation } from "../app/i18n/client";
 
-const Banner = () => {
+const Banner = ({ params: { lng } }: { params: { lng: string } }) => {
   const [uploadedImage, setUploadedImage] = useState(null as string | null);
   const [watermarkedImage, setWatermarkedImage] = useState(null as string | null);
   const [imageName, setImageName] = useState(null as string | null);
+  const { t } = useTranslation(lng, 'banner')
 
-  const handleImageUpload = (image: string, name:string) => {
+  const handleImageUpload = (image: string, name: string) => {
     setUploadedImage(image);
     setWatermarkedImage(null);
     setImageName(name);
@@ -30,12 +32,12 @@ const Banner = () => {
       {!uploadedImage && (
         <div className="text-center mb-4">
           <h1 className="text-4xl font-bold text-white">
-            Bienvenue sur Filigran Generator
+            {t('title')}
           </h1>
           <p className="text-xl text-gray-300">
-            Un outil qui vous permet de <span className="text-transparent font-semibold bg-clip-text bg-gradient-to-r from-purple-500 to-orange-400">
-              générer des filigranes personnalisés
-            </span> pour vos images.
+            {t('p1')} <span className="text-transparent font-semibold bg-clip-text bg-gradient-to-r from-purple-500 to-orange-400">
+              {t('spanP1')}
+            </span> {t('p1-2')}
           </p>
         </div>)}
 
@@ -60,18 +62,18 @@ const Banner = () => {
             </div>
           )}
           {!uploadedImage && (
-            <ImageUpload onImageUpload={handleImageUpload} />
+            <ImageUpload onImageUpload={handleImageUpload} params={{ lng }}/>
           )}
         </div>
       </div>
-      {uploadedImage && (<Watermarker base64Image={uploadedImage}  imageName={imageName} onWatermarkApplied={handleWatermarkApplied} />)}
+      {uploadedImage && (<Watermarker base64Image={uploadedImage} imageName={imageName} onWatermarkApplied={handleWatermarkApplied}  params={{ lng }} />)}
       {!uploadedImage && (
         <div className="bg-gray-800 px-6 py-5 rounded-lg shadow-lg md:max-w-lg max-w-[22rem] mx-auto text-center">
           <h2 className="text-md text-white font-semibold mb-2">
-            Protégez vos images contre l&apos;utilisation non autorisée
+            {t('h2')}
           </h2>
           <p className="text-gray-300 mb-2">
-            Filigran offre un moyen rapide et efficace d&apos;ajouter un filigrane à vos images sans compromettre la confidentialité. Ce service fonctionne entièrement dans votre navigateur, assurant que vos images restent uniquement entre vos mains.
+            {t('p2')}
           </p>
         </div>
       )}

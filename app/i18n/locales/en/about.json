@@ -1,0 +1,7 @@
+{
+    "title": "About Filigran Generator",
+    "p1": "Filigran Generator is a tool that allows you to",
+    "span": "generate custom watermarks",
+    "p2":"for your images.",
+    "p3":"It uses modern web technologies to process your images directly in your browser. No data is sent to a server or stored. Everything is processed locally on your machine to guarantee the confidentiality of your data."
+  }

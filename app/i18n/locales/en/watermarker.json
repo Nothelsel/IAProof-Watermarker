@@ -1,0 +1,14 @@
+{
+    "inputPlaceholder": "Enter your watermark (e.g. confidential)",
+    "iaProofInfo": "IAProof is an option that makes the watermark resistant to AI.",
+    "imageResize": "Resize Image",
+    "imageResizeInfo": "Resizing the image optimizes processing time. If you wish to retain the original image quality, disable this option.",
+    "advancedMode": "Advanced mode",
+    "advancedModeInfo": "Advanced mode allows you to control more parameters for the watermark.",
+    "noiseLevel": "Noise level:",
+    "removeMetadata": "Delete image metadata",
+    "removeMetadataInfo": "Remove image metadata to increase image privacy",
+    "bySeb2dev": "Watermark By Seb2Dev",
+    "bySeb2devInfo": "Adds a By Seb2Dev watermark to the bottom right of the image",
+    "seed": "Seed :"
+}

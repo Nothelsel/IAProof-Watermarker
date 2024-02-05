@@ -6,18 +6,24 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 3501",
-    "build": "rm -rf .next && next build",
+    "build": "rm -rf .next && npm i && next build",
     "start": "PORT=3001 next start",
     "lint": "next lint",
     "build-and-restart": "next build && pm2 restart IAProof-Watermarker"
   },
   "dependencies": {
     "@types/seedrandom": "^3.0.8",
+    "accept-language": "^3.0.18",
     "colorthief": "^2.4.0",
+    "i18next": "^23.8.2",
+    "i18next-browser-languagedetector": "^7.2.0",
+    "i18next-resources-to-backend": "^1.2.0",
     "next": "14.0.4",
     "piexifjs": "^1.0.6",
     "react": "^18",
+    "react-cookie": "^7.0.2",
     "react-dom": "^18",
+    "react-i18next": "^14.0.3",
     "react-toastify": "^10.0.1",
     "seedrandom": "^3.0.5",
     "sharp": "^0.33.0"
