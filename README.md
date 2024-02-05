@@ -33,8 +33,8 @@ Pour utiliser IAProof-Watermarker dans votre projet, suivez ces étapes :
 Clonez le dépôt :
 
 ```bash
-git clone https://github.com/votre-username/ia-proof-watermarker.git
-cd ia-proof-watermarker
+git clone https://github.com/Nothelsel/IAProof-Watermarker.git
+cd IAProof-Watermarker
 npm install
 ```
 
