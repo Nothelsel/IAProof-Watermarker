@@ -15,6 +15,7 @@
     "@types/seedrandom": "^3.0.8",
     "accept-language": "^3.0.18",
     "colorthief": "^2.4.0",
+    "dotenv": "^16.4.5",
     "i18next": "^23.8.2",
     "i18next-browser-languagedetector": "^7.2.0",
     "i18next-resources-to-backend": "^1.2.0",
@@ -25,8 +26,7 @@
     "react-dom": "^18",
     "react-i18next": "^14.0.3",
     "react-toastify": "^10.0.1",
-    "seedrandom": "^3.0.5",
-    "sharp": "^0.33.0"
+    "seedrandom": "^3.0.5"
   },
   "devDependencies": {
     "@react-three/drei": "^9.92.1",

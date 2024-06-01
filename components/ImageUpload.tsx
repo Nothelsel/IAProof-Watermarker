@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import { useTranslation } from "../app/i18n/client";
+import { encodeImageWithText } from '@/lib/crypto';
 
 const ImageUpload = ({ onImageUpload, params: { lng } }: {onImageUpload: (image: string, name: string) => void, params: { lng: string } }) => {
     const [image, setImage] = useState(null as string | null);
@@ -12,13 +13,21 @@ const ImageUpload = ({ onImageUpload, params: { lng } }: {onImageUpload: (image:
             return;
         }
         const reader = new FileReader();
-        reader.onload = (e) => {
+        reader.onload = async (e) => {
+            // const base64Image = e.target?.result as string;
+            // const encodedImage = await encodeImageWithText(Buffer.from(base64Image, 'base64'));
+            
+            // // Ensuite, utilisez setImage et onImageUpload avec l'image encodée
+            // setImage(encodedImage);
+            // const fileNameWithoutExtension = file.name.split('.').slice(0, -1).join('.');
+            // onImageUpload(encodedImage, fileNameWithoutExtension);
             setImage(e.target?.result as string);
             const fileNameWithoutExtension = file.name.split('.').slice(0, -1).join('.');
             onImageUpload(e.target?.result as string, fileNameWithoutExtension);
         };
         reader.readAsDataURL(file);
-    };
+      };
+      
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
